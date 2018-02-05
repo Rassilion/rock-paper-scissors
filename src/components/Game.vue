@@ -5,7 +5,7 @@
         <div class="flip-container" v-bind:class="{ flip: state.selected }">
           <div class="flipper">
             <img class="front" src="../assets/back.png">
-            <img id="card" class="back" src="../assets/pa.png">
+            <img id="card" class="back" v-bind:src="enemyImg">
           </div>
         </div>
       </div>
@@ -34,11 +34,24 @@ export default {
   name: "Game",
   methods: {
     selectCard(index) {
-      this.state.selected=index;
+      this.state.selected = index;
+      this.state.enemy = Math.floor(Math.random() * 3) + 1;
+      switch (this.state.enemy) {
+        case 1:
+          this.enemyImg = require("../assets/ro.png");
+          break;
+        case 2:
+          this.enemyImg = require("../assets/pa.png");
+          break;
+        case 3:
+          this.enemyImg = require("../assets/sc.png");
+          break;
+      }
     }
   },
   data() {
     return {
+      enemyImg: null,
       state: { selected: 0, enemy: 0 }
     };
   }
