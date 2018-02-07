@@ -22,13 +22,28 @@
     </div>
     <div class="row">
       <div class="four columns">
-        <img src="../assets/ro.png" @click="selectCard(1)">
+        <div class="flip-container" v-bind:class="{ flip: state.selected == 2 || state.selected == 3 }">
+          <div class="flipper">
+            <img src="../assets/ro.png" @click="selectCard(1)">
+            <img class="back" src="../assets/back.png">
+          </div>
+        </div>
       </div>
       <div class="four columns">
-        <img src="../assets/pa.png" @click="selectCard(2)">
+        <div class="flip-container" v-bind:class="{ flip: state.selected == 1 || state.selected == 3 }">
+          <div class="flipper">
+            <img src="../assets/pa.png" @click="selectCard(2)">
+            <img class="back" src="../assets/back.png">
+          </div>
+        </div>
       </div>
       <div class="four columns">
-        <img src="../assets/sc.png" @click="selectCard(3)">
+        <div class="flip-container" v-bind:class="{ flip: state.selected == 2 || state.selected == 1 }">
+          <div class="flipper">
+            <img src="../assets/sc.png" @click="selectCard(3)">
+            <img class="back" src="../assets/back.png">
+          </div>
+        </div>
       </div>
     </div>
   </div>
