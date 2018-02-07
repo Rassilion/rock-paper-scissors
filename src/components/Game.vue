@@ -15,8 +15,8 @@
         <div v-if="!state.selected" key="start" class="six columns offset-by-three">
           <h1>Select a card</h1>
         </div>
-        <div v-else key="end" class="eight columns offset-by-two">
-          <h1>You {{ state.result }}. Play again?</h1>
+        <div v-else key="end" class="ten columns offset-by-one">
+          <h1 @click="playagain()">You {{ state.result }}. Click to play again.</h1>
         </div>
       </transition>
     </div>
@@ -53,23 +53,46 @@
 export default {
   name: "Game",
   methods: {
+    playagain(){this.state={ selected: 0, enemy: 0, result: "" }},
     selectCard(index) {
+      if(this.state.selected!=0){
+        return
+      }
       this.state.selected = index;
       // select enemy card
       this.state.enemy = Math.floor(Math.random() * 3) + 1;
       switch (this.state.enemy) {
         case 1:
           this.enemyImg = require("../assets/ro.png");
+          if (this.state.selected == 1) {
+            this.state.result = "Draw";
+          } else if (this.state.selected == 3) {
+            this.state.result = "Lose";
+          } else if (this.state.selected == 2) {
+            this.state.result = "Win";
+          }
           break;
         case 2:
           this.enemyImg = require("../assets/pa.png");
+          if (this.state.selected == 2) {
+            this.state.result = "Draw";
+          } else if (this.state.selected == 1) {
+            this.state.result = "Lose";
+          } else if (this.state.selected == 3) {
+            this.state.result = "Win";
+          }
           break;
         case 3:
           this.enemyImg = require("../assets/sc.png");
+          if (this.state.selected == 3) {
+            this.state.result = "Draw";
+          } else if (this.state.selected == 2) {
+            this.state.result = "Lose";
+          } else if (this.state.selected == 1) {
+            this.state.result = "Win";
+          }
           break;
       }
-      // game logic
-      this.state.result = "win";
     }
   },
   data() {
