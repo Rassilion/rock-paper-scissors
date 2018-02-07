@@ -11,9 +11,14 @@
       </div>
     </div>
     <div class="row">
-      <div class="six columns offset-by-three">
-        <h1>Select a card</h1>
-      </div>
+      <transition name="fade" mode="out-in">
+        <div v-if="!state.selected" key="start" class="six columns offset-by-three">
+          <h1>Select a card</h1>
+        </div>
+        <div v-else key="end" class="eight columns offset-by-two">
+          <h1>You {{ state.result }}. Play again?</h1>
+        </div>
+      </transition>
     </div>
     <div class="row">
       <div class="four columns">
@@ -35,6 +40,7 @@ export default {
   methods: {
     selectCard(index) {
       this.state.selected = index;
+      // select enemy card
       this.state.enemy = Math.floor(Math.random() * 3) + 1;
       switch (this.state.enemy) {
         case 1:
@@ -47,12 +53,14 @@ export default {
           this.enemyImg = require("../assets/sc.png");
           break;
       }
+      // game logic
+      this.state.result = "win";
     }
   },
   data() {
     return {
       enemyImg: null,
-      state: { selected: 0, enemy: 0 }
+      state: { selected: 0, enemy: 0, result: "" }
     };
   }
 };
@@ -60,6 +68,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 /* https://davidwalsh.name/css-flip */
 /* entire container, keeps perspective */
 .flip-container {
